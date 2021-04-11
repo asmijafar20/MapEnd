@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+    
+<form method='POST' action="">
+
+<h1>Register</h1>
+{% from "includes/_formhelpers.html" import render_field %}
+
+<div class="container my-4 mx-auto col-10">
+    <div style="margin-bottom:150px;" class="card container p-4">
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            <div class="form-group">
+                {{form.username.label(class="form-control-label")}}
+                <!--For form validation-->                
+                {% if form.username.errors %}
+                {{form.username(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.username(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.email.label(class="form-control-label")}}
+                <!--For form validation-->                
+                {% if form.email.errors %}
+                {{form.email(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.email(class="form-control form-control-lg")}}
+                {% endif %}                
+            </div>
+            <div class="form-group">
+                {{form.password.label(class="form-control-label")}}
+                <!--For form validation-->                
+                {% if form.password.errors %}
+                {{form.password(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.password(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.confirm_password.label(class="form-control-label")}}
+                <!--For form validation-->                
+                {% if form.confirm_password.errors %}
+                {{form.confirm_password(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.confirm_password.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.confirm_password(class="form-control form-control-lg")}}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.submit(class="btn btn-outline-info")}}
+            </div>
+        </div>
+    </form>
+    <div class="border-top pt-3 text-muted p-2">
+        Already have an account? <a href="{{url_for('auth.login')}}" class="ml-2">Login Here</a>
+    </div>
+    </div>  
+
+
+</form>
+{% endblock %}
