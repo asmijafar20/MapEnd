@@ -3,10 +3,12 @@ from journal.models import User
 from wtforms import StringField,PasswordField,SubmitField,BooleanField
 from wtforms.validators import DataRequired,Length,Email,EqualTo,ValidationError
 from flask_login import current_user
+from wtforms import SelectField
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=2,max=20)])
     email = StringField('Email',validators=[DataRequired(),Email()])
+    role = SelectField('Role', choices=[('interviewer', 'Interviewer'), ('user', 'User'), ('cs expert', 'CS Expert')])
     password = PasswordField('Password',validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',validators=[DataRequired(),EqualTo('password')])
     submit = SubmitField('Sign Up')

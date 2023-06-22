@@ -42,6 +42,20 @@
                 {% endif %}                
             </div>
             <div class="form-group">
+                {{form.role.label(class="form-control-label")}}
+                <!--For form validation-->                
+                {% if form.email.errors %}
+                {{form.role(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.role.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{form.role(class="form-control form-control-lg")}}
+                {% endif %}                
+            </div>
+            <div class="form-group">
                 {{form.password.label(class="form-control-label")}}
                 <!--For form validation-->                
                 {% if form.password.errors %}

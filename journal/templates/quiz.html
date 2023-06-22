@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+  <h1>Dashboard<small> Welcome Interviewer {{current_user.username}}</small></h1>
+  <h1>Add Quiz related to Computer Science</h1>
+
+  <table id="quiz" class="table table-striped">
+    <thead>
+        <tr>
+            <th>Question</th>
+            <th>Choices</th>
+            <th>Answer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in quiz %}
+        <tr>
+            <td>{{ q.question }}</td>
+            <td>
+                <form action="/check_answer" method="POST">
+                    {% for c in q.choices.split(',') %}
+                    <input type="radio" name="choice" value="{{ c }}"> {{ c }}<br>
+                    {% endfor %}
+                    <input type="hidden" name="question_id" value="{{ q.id }}">
+                    <input type="submit" value="Submit">
+                </form>
+            </td>
+            <td>{{ q.answer }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

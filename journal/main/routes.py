@@ -23,7 +23,7 @@ def about():
     return render_template('about.html')
 
 #Articles
-@main.route('/articles')
+@main.route('/courses')
 def articles():
     #debug this later
     articles = Article.query.order_by(Article.date_posted.desc())
@@ -56,7 +56,7 @@ def dashboard():
     # cur.close()
 
 # Add Article
-@main.route('/add_article', methods=['GET','POST'])
+@main.route('/add_course', methods=['GET','POST'])
 @login_required
 def add_article():
     form = ArticleForm()
@@ -71,7 +71,7 @@ def add_article():
 
 
 # Edit Article
-@main.route('/edit_article/<string:id>', methods=['GET','POST'])
+@main.route('/edit_course/<string:id>', methods=['GET','POST'])
 @login_required
 def edit_article(id):
     article = Article.query.get_or_404(id)
@@ -101,3 +101,17 @@ def delete(id):
     db.session.commit()
     flash("Your article has been deleted",'success')
     return redirect(url_for('main.dashboard'))
+
+@main.route('/quiz')
+def quiz():
+    #Debug this later
+    user = User.query.filter_by(username=current_user.username)
+    articles = Article.query.filter_by(user_id=current_user.id).order_by(Article.date_posted.desc())
+    
+    return render_template('dashboard.html',articles=articles)
+    # else:
+    #     msg = 'No Articles Found'
+    #     return render_template('dashboard.html', msg = msg)
+   
+    # #Close Connection
+    # cur.close()

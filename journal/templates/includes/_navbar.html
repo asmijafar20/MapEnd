@@ -12,7 +12,12 @@
         <ul class="nav navbar-nav">
           <li><a href="/">Home</a></li>
           <li><a href="/about">About</a></li>
-          <li><a href="/articles">Articles</a></li>
+          {% if current_user.is_authenticated and current_user.role == 'user' %}
+          <li><a href="/courses">Courses</a></li>
+          {% endif %}
+          {% if current_user.is_authenticated and current_user.role == "interviewer" %} 
+          <li><a href="/quiz">Quiz</a></li> 
+          {% endif %}
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

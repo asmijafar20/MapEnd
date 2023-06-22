@@ -3,9 +3,10 @@
 
 {% block body %}
 
-  <h1>Dashboard<small> Welcome {{current_user.username}}</small></h1>
+  <h1>Dashboard<small> Welcome Expert {{current_user.username}}</small></h1>
+  <h1>Add Courses related to Computer Science</h1>
 
-  <a class="btn btn-success" href="/add_article">Add Article</a>
+  <a class="btn btn-success" href="/add_course">Add Courses</a>
   <hr>
   <table class="table table-striped">
       <tr>
@@ -22,7 +23,7 @@
         <td>{{article.title}}</td>
         <td>{{article.author.username}}</td>
         <td>{{article.date_posted.strftime('%Y-%m-%d')}}</td>
-        <td><a href="edit_article/{{article.id}}" class="btn btn-default pull-right">Edit</a></td>
+        <td><a href="edit_course/{{article.id}}" class="btn btn-default pull-right">Edit</a></td>
         <td>
           <form action="{{url_for('main.delete', id=article.id)}}" method="post">
             <input type="hidden" name="_method" value="DELETE">
