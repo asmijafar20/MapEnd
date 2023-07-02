@@ -30,8 +30,18 @@ class Article(db.Model):
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow())
     body = db.Column(db.Text,nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    quizid = db.Column(db.Integer,nullable=False)
     #Here using lower case User because this refers to the table name
     def __repr__(self):
         return f"Article('{self.title}','{self.date_posted}')"
 
-
+class Quiz(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    question = db.Column(db.Text,nullable=False)
+    answer = db.Column(db.Text,nullable=False)
+    choiceA = db.Column(db.Text,nullable=False)
+    choiceB = db.Column(db.Text,nullable=False)
+    choiceC = db.Column(db.Text,nullable=False)
+    #Here using lower case User because this refers to the table name
+    def __repr__(self):
+        return f"Quiz('{self.title}','{self.date_posted}')"

@@ -3,10 +3,26 @@
 
 {% block body %}
 
-  <h1>Dashboard<small> Welcome Expert {{current_user.username}}</small></h1>
-  <h1>Add Courses related to Computer Science</h1>
+  {% if current_user.role == "cs expert" %}
+  <div>
+    <h1>Dashboard<small> Welcome Expert {{current_user.username}}</small></h1>
+    <h1>Add Courses related to Computer Science</h1>
+    <a class="btn btn-success" href="/add_course">Add Courses</a>
+  </div>
+  {% elif current_user.role == "interviewer" %}
+  <div>
+    <h1>Dashboard<small> Welcome Interviewer {{current_user.username}}</small></h1>
+    <h1>Add Quizes related to Computer Science Interview</h1>
+    <a class="btn btn-success" href="/add_quiz">Add Quizes</a>
+  </div>
+  {% else %}
+  <div>
+    <h1>Dashboard<small> Welcome {{current_user.username}}</small></h1>
+    <h1>Add Courses related to Computer Science</h1>
+    <a class="btn btn-success" href="/add_course">Add Courses</a>
+  </div>
+  {% endif %}
 
-  <a class="btn btn-success" href="/add_course">Add Courses</a>
   <hr>
   <table class="table table-striped">
       <tr>

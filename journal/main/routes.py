@@ -1,6 +1,6 @@
 from flask import Blueprint
-from journal.models import User,Article
-from journal.main.forms import ArticleForm
+from journal.models import Quiz, User,Article
+from journal.main.forms import ArticleForm, QuizForm
 from flask import render_template, flash,redirect,url_for, request,abort
 from flask_login import current_user,login_required
 from journal import db
@@ -69,6 +69,20 @@ def add_article():
         return redirect(url_for('main.dashboard'))
     return render_template('add_article.html', form = form)
 
+# Add quiz
+@main.route('/add_quiz', methods=['GET','POST'])
+@login_required
+def add_quiz():
+    form = QuizForm()
+    if form.validate_on_submit():
+        # using author here (check backref in models.py)
+        quiz = Quiz(question=form.title.data,choices=form.body.data,answer=current_user)
+        db.session.add(quiz)
+        db.session.commit()
+        flash('Your quiz has been created !','success')
+        return redirect(url_for('main.dashboard'))
+    return render_template('add_quiz.html', form = form)
+
 
 # Edit Article
 @main.route('/edit_course/<string:id>', methods=['GET','POST'])
@@ -102,16 +116,25 @@ def delete(id):
     flash("Your article has been deleted",'success')
     return redirect(url_for('main.dashboard'))
 
-@main.route('/quiz')
-def quiz():
-    #Debug this later
-    user = User.query.filter_by(username=current_user.username)
-    articles = Article.query.filter_by(user_id=current_user.id).order_by(Article.date_posted.desc())
-    
-    return render_template('dashboard.html',articles=articles)
+@main.route('/quizes')
+def quizes():
+    articles = Quiz.query.all()
+    total = count(articles)
+    if total>0:
+        return render_template('quizes.html',articles=articles)
+    else:
+        flash('Oops ! No Article found','success')
+        return render_template('quizes.html')
     # else:
     #     msg = 'No Articles Found'
     #     return render_template('dashboard.html', msg = msg)
    
     # #Close Connection
     # cur.close()
+
+
+#Single quiz
+@main.route('/quiz/<string:id>/')
+def quiz(id):
+    quiz = Quiz.query.get_or_404(id)
+    return render_template('quiz.html', quiz = quiz)

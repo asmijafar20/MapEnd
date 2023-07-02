@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ASMI",
+            "database": "\\\\wsl.localhost\\UbuntuSd\\home\\husainhz7\\Code\\thirparty\\Journaling\\journal\\site.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

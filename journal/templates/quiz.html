@@ -3,8 +3,8 @@
 
 {% block body %}
 
-  <h1>Dashboard<small> Welcome Interviewer {{current_user.username}}</small></h1>
-  <h1>Add Quiz related to Computer Science</h1>
+  <h1>Quiz<small> Welcome {{current_user.username}}</small></h1>
+  <h1>Answer the following questions</h1>
 
   <table id="quiz" class="table table-striped">
     <thead>
@@ -15,21 +15,19 @@
         </tr>
     </thead>
     <tbody>
-        {% for q in quiz %}
         <tr>
-            <td>{{ q.question }}</td>
+            <td>{{ quiz.question }}</td>
             <td>
                 <form action="/check_answer" method="POST">
-                    {% for c in q.choices.split(',') %}
-                    <input type="radio" name="choice" value="{{ c }}"> {{ c }}<br>
-                    {% endfor %}
-                    <input type="hidden" name="question_id" value="{{ q.id }}">
+                    <input type="radio" name="choiceA" value="{{ quiz.choiceA }}"> {{ quiz.choiceA }}<br>
+                    <input type="radio" name="choiceB" value="{{ quiz.choiceB }}"> {{ quiz.choiceB }}<br>
+                    <input type="radio" name="choiceC" value="{{ quiz.choiceC }}"> {{ quiz.choiceC }}<br>
+                    <input type="hidden" name="quizid" value="{{ quiz.id }}">
                     <input type="submit" value="Submit">
                 </form>
             </td>
-            <td>{{ q.answer }}</td>
+            <td>{{ quiz.answer }}</td>
         </tr>
-        {% endfor %}
     </tbody>
 </table>
 

@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form method="POST" action="">
+  <style>
+    body {
+      background-image: url('https://img.freepik.com/premium-photo/workspace-with-office-tools-laptop-notebook-pastel-green-background_101276-195.jpg');
+      background-attachment: fixed; 
+      background-size: cover;
+      background-size: 100% 100%;
+  
+    }
+
+    </style>
+    <h1 style="color: white;"><b>Add Course!</b></h1>
+  {% from "includes/_formhelpers.html" import render_field %}
+  <div class="container p-4">
+    <div class="alert alert-success my-3"  role="alert">
+        Write here!
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category,message in messages %}
+    <div class="alert alert-{{category}} my-3"  role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form method="POST" action="">
+        {{form.hidden_tag()}}
+        <div class="form-group">
+            <h1>New Course</h1>
+            <div class="form-group">
+                <!--For form validation-->                
+                {% if form.title.errors %}
+                {{form.title(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.title.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ render_field(form.title, class_="form-control") }}
+                {% endif %}                
+            </div>
+            <div class="form-group">
+                <!--For form validation-->                
+                {% if form.body.errors %}
+                {{ render_field(form.body, class_="form-control") }}
+                <div class="invalid-feedback">
+                    {% for error in form.body.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="form-group" style="color: black; font-size: 30px;">
+                  {{ render_field(form.body, class_="form-control", id="editor") }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{form.submit(class="btn btn-outline-info")}}
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+  </form>
+
+  
+{% endblock %}
+
