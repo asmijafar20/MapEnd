@@ -246,6 +246,7 @@ def delete_user(id):
     flash("User has been deleted",'success')
     return redirect(url_for('main.admin_dashboard'))
 
+#Response Dashboard
 @main.route('/response_dashboard')
 def response_dashboard():
     # Get all responses along with the associated user's email
