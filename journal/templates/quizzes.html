@@ -4,13 +4,13 @@
 
 {% block body %}
  
-  <h1>Courses</h1>
+  <h1>Quizzes Related to CS</h1>
 
 
   <ul class="list-group">
-    
 
-{%  for article in articles %}
+
+{%  for quiz in quizzes %}
            <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -40,9 +40,9 @@
 
 <li class="list-group-item">
 
-      <h3>{{article.title}}</h3>
-      <p class="card-text">{{article.body[:200]|markdown}}....</p>
-      <a href="{{url_for('main.article',id=article.id)}}" class="btn btn-primary">Read full Course</a>
+      <h3>{{quiz.title}}</h3>
+      <p class="card-text"></p>
+      <a href="{{url_for('main.take_quiz',id=quiz.id)}}" class="btn btn-primary">Take quiz!</a>
  </li>
 
     {% endfor %}

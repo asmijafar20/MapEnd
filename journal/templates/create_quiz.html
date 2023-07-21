@@ -1,0 +1,199 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<head>
+    <title>Create Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 70px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            
+        }
+
+        .question label {
+            margin-bottom: 5px;
+        }
+
+        .question input[type="text"] {
+            width: 80%;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .question .option {
+            margin-bottom: 5px;
+        }
+
+        .question input[type="checkbox"] {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create Quiz</h1>
+    <form action="/create_quiz" method="POST">
+        <label for="title">Quiz Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <div id="questions">
+            <div class="question">
+                <label>Question:</label>
+                <input type="text" name="question" required>
+                <label>Options:</label>
+                <div class="option">
+                    <input type="text" name="option" required>
+                    <input type="checkbox" name="correct_answer" value="option1"> Correct Answer<br>
+                </div>
+                <div class="option">
+                    <input type="text" name="option" required>
+                    <input type="checkbox" name="correct_answer" value="option2"> Correct Answer<br>
+                </div>
+                <div class="option">
+                    <input type="text" name="option" required>
+                    <input type="checkbox" name="correct_answer" value="option3"> Correct Answer<br>
+                </div>
+                <div class="option">
+                    <input type="text" name="option" required>
+                    <input type="checkbox" name="correct_answer" value="option4"> Correct Answer<br>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="button" onclick="addQuestion()">Add Question</button><br><br>
+        <input type="submit" value="Create Quiz">
+    </form>
+    
+    <script>
+        function addQuestion() {
+            var questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+
+            var questionLabel = document.createElement('label');
+            questionLabel.textContent = 'Question:';
+            questionLabel.style.display = 'block';
+            questionLabel.style.marginBottom = '5px';
+
+            var questionInput = document.createElement('input');
+            questionInput.type = 'text';
+            questionInput.name = 'question';
+            questionInput.required = true;
+
+            var optionsLabel = document.createElement('label');
+            optionsLabel.textContent = 'Options:';
+            optionsLabel.style.display = 'block';
+            optionsLabel.style.display = 'flex';
+
+            optionsLabel.style.marginBottom = '5px';
+
+            var optionDivs = [];
+
+            for (var i = 0; i < 4; i++) {
+                var optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+
+                var optionInput = document.createElement('input');
+                optionInput.type = 'text';
+                optionInput.name = 'option'; 
+                optionInput.required = true;
+
+                var correctAnswerContainer = document.createElement('div');
+                correctAnswerContainer.style.display = 'flex';
+                correctAnswerContainer.style.alignItems = 'center';
+
+                var correctAnswerInput = document.createElement('input');
+                correctAnswerInput.type = 'checkbox';
+                correctAnswerInput.name = 'correct_answer'; // Add index value to differentiate correct answers
+                correctAnswerInput.value = 'option' + (i+1); // Add index value to differentiate options
+
+
+                var correctAnswerLabel = document.createElement('label');
+                correctAnswerLabel.textContent = 'Correct Answer';
+                correctAnswerLabel.style.marginLeft = '5px';
+
+                
+
+                optionDiv.appendChild(optionInput);
+                optionDiv.appendChild(correctAnswerContainer);
+
+
+                correctAnswerContainer.appendChild(correctAnswerInput);
+                correctAnswerContainer.appendChild(correctAnswerLabel);
+
+                optionDiv.style.display = 'flex';
+                optionDiv.style.alignItems = 'center';
+                optionDiv.style.justifyContent = 'space-between';
+
+                optionDivs.push(optionDiv);
+            }
+
+            questionDiv.appendChild(questionLabel);
+            questionDiv.appendChild(questionInput);
+            questionDiv.appendChild(optionsLabel);
+
+            for (var i = 0; i < 4; i++) {
+                questionDiv.appendChild(optionDivs[i]);
+            }
+
+            document.getElementById('questions').appendChild(questionDiv);
+        }
+    </script>
+</body>
+{% endblock %}

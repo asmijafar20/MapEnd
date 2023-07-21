@@ -1,0 +1,91 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #dddddd;
+        border-radius: 4px;
+        background-color: #ffffff;
+    }
+
+    .question {
+        margin-bottom: 20px;
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        font-size:large;
+    }
+
+    .question p {
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .option {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    input[type="checkbox"] {
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        max-width: 200px;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #ffffff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<h1>Take Quiz</h1>
+<h3>{{ quiz.title }}</h3>
+
+<form action="{{ url_for('main.take_quiz', id=quiz.id) }}" method="POST">
+    {% for question in quiz.questions %}
+    <div class="question">
+        <p>{{ question.question_text }}</p>
+        {% for option in question.options %}
+        <div class="option">
+            <input type="checkbox" id="option{{ loop.index }}" name="response" value="option{{ loop.index }}">
+            <label for="option{{ loop.index }}">{{ option.option_text }}</label>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

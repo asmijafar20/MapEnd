@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+  <h1>List of registered users<small> </small></h1>
+  <hr>
+  <table class="table table-striped">
+      <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>Role</th>
+          <th></th>
+      </tr>
+    {% for user in users %}
+       <tr>
+        <td>{{loop.index}}</td>
+        <td>{{user.id}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
+        <td>
+          <form action="{{url_for('main.delete_user', id=user.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor%}
+  </table>
+{% endblock %}

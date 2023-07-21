@@ -45,8 +45,10 @@ def login():
             flash('You have been logged in.','success')
 
             # check if user role is cs expert
-            if user.role == 'cs expert':
+            if user.role == 'cs expert' or user.role == 'interviewer' or user.role == 'admin':
                 return redirect(url_for('main.dashboard'))
+            elif current_user.role == 'user':
+                return redirect(url_for('main.articles'))
             else:
                 return redirect('/')
         else:

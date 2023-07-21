@@ -3,8 +3,10 @@
 
 {% block body %}
 
+{% if current_user.is_authenticated and current_user.role == "cs expert" %} 
+
   <h1>Dashboard<small> Welcome Expert {{current_user.username}}</small></h1>
-  <h1>Add Courses related to Computer Science</h1>
+  <h1>Add Courses</h1>
 
   <a class="btn btn-success" href="/add_course">Add Courses</a>
   <hr>
@@ -33,4 +35,60 @@
       </tr>
     {% endfor%}
   </table>
+  {% endif %}
+  {% if current_user.is_authenticated and current_user.role == "interviewer" %} 
+  <h1>Dashboard<small> Welcome Interviewer {{current_user.username}}</small></h1>
+  <h1>Add Quizzes</h1>
+  <a class="btn btn-success" href="/create_quiz">Add Quiz</a>
+  <hr>
+  <table class="table table-striped">
+      <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Interviewer</th>
+          <th>Date</th>
+          <th></th>
+          <th></th>
+      </tr>
+    {% for quiz in quizzes %}
+       <tr>
+        <td>{{loop.index}}</td>
+        <td>{{quiz.title}}</td>
+        <td>{{quiz.interviewer.username}}</td>
+        <td>{{quiz.date_posted.strftime('%Y-%m-%d')}}</td>
+        <td>
+          <form action="{{url_for('main.delete_quiz', id=quiz.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor%}
+  </table>
+  {% endif %}
+  {% if current_user.is_authenticated and current_user.role == "admin" %} 
+  <h1>List of registered users<small> </small></h1>
+  <hr>
+  <table class="table table-striped">
+      <tr>
+          <th>ID</th>
+          <th>Email Address</th>
+          <th>Role</th>
+          <th></th>
+      </tr>
+    {% for user in users %}
+       <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
+        <td>
+          <form action="{{url_for('main.delete_user', id=user.id)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+      </tr>
+    {% endfor%}
+  </table>
+  {% endif %}
 {% endblock %}
