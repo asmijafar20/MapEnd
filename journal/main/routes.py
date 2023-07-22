@@ -248,24 +248,17 @@ def convert_string_to_list(quizes_taken_data):
 @main.route('/admin_dashboard')
 def admin_dashboard():
     #Debug this later
-    user = User.query.filter_by(username=current_user.username)
-    users = User.query.filter_by(id=current_user.id).order_by(User.id.desc())
+    # users = User.query.filter_by(id=current_user.id).order_by(User.id.desc())
+    users = User.query.order_by(User.id.desc()).all()
     
-    return render_template('dashboard.html',users=users)
-    # else:
-    #     msg = 'No Articles Found'
-    #     return render_template('dashboard.html', msg = msg)
-   
-    # #Close Connection
-    # cur.close()
-    
+    return render_template('dashboard.html',users=users)    
 
 # Delete User
 @main.route("/users/<int:id>/delete_user",methods=['POST'])
 @login_required
 def delete_user(id):
-    user = User.query.get_or_404(id)
-    db.session.delete_user(user)
+    user = User.query.get(id)
+    db.session.delete(user)
     db.session.commit()
     flash("User has been deleted",'success')
     return redirect(url_for('main.admin_dashboard'))
