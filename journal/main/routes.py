@@ -121,10 +121,11 @@ def create_quiz():
         title = request.form['title']
         questions = request.form.getlist('question')
         options = request.form.getlist('option')
+        subject = request.form.getlist('subject')
         correct_answers = request.form.getlist('correct_answer')
 
         # Create a new quiz object
-        quiz = Quiz(title=title,interviewer_id=current_user.id)
+        quiz = Quiz(title=title,interviewer_id=current_user.id, subject=subject)
 
         optionCount=0
 

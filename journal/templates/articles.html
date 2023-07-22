@@ -4,49 +4,80 @@
 
 {% block body %}
  
-  <h1>Courses</h1>
+<h1>Courses</h1>
 
-
-  <ul class="list-group">
-    
-
-{%  for article in articles %}
-           <!-- Add icon library -->
+<ul class="list-group">
+<!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
 <style>
   @media only screen and (min-width: 768px) {
-
-  .fa {
-    font-size: 20px;
-    cursor: pointer;
-    user-select: none;
-    padding-top: 40px;
-    padding-left: 1080px;
-  }
-  
-  .fa:hover {
-    color: rgb(216, 36, 36);
-  }
+    .fa {
+      font-size: 20px;
+      cursor: pointer;
+      user-select: none;
+      padding-top: 40px;
+      padding-left: 1080px;
+    }
+    
+    .fa:hover {
+      color: rgb(216, 36, 36);
+    }
   }
   body {
-        background-image: url('https://www.fonewalls.com/wp-content/uploads/2160x3840-Background-HD-Wallpaper-269-600x1067.jpg');
-        background-attachment: fixed; 
-        background-size: cover;
-        background-size: 100% 100%;
-    
-      }
-  </style>
-<!-- Use an element to toggle between a like/dislike icon -->
+    background-image: url('https://www.fonewalls.com/wp-content/uploads/2160x3840-Background-HD-Wallpaper-269-600x1067.jpg');
+    background-attachment: fixed; 
+    background-size: cover;
+    background-size: 100% 100%;
+  }
+</style>
 
-<li class="list-group-item">
+  <h3>English</h3>
+  {% for article in articles %}
+    {% if article.subject == "english" %}
+    <li class="list-group-item">
 
       <h3>{{article.title}}</h3>
       <p class="card-text">{{article.body[:200]|markdown}}....</p>
       <a href="{{url_for('main.article',id=article.id)}}" class="btn btn-primary">Read full Course</a>
- </li>
+    </li>
+    {% endif %}
+  {% endfor %}
 
-    {% endfor %}
-  </ul>
+  <h3>Computer Science</h3>
+  {% for article in articles %}
+    {% if article.subject == "computer-science" %}
+    <li class="list-group-item">
+      <h3>{{article.title}}</h3>
+      <p class="card-text">{{article.body[:200]|markdown}}....</p>
+      <a href="{{url_for('main.article',id=article.id)}}" class="btn btn-primary">Read full Course</a>
+    </li>
+    {% endif %}
+  {% endfor %}
 
+  <h3>Maths</h3>
+  {% for article in articles %}
+    {% if article.subject == "maths" %}
+    <li class="list-group-item">
+      <h3>{{article.title}}</h3>
+      <p class="card-text">{{article.body[:200]|markdown}}....</p>
+      <a href="{{url_for('main.article',id=article.id)}}" class="btn btn-primary">Read full Course</a>
+    </li>
+    {% endif %}
+  {% endfor %}
+
+  <h3>Others</h3>
+
+  {% for article in articles %}
+    {% if article.subject != "english" %}
+    <li class="list-group-item">
+      <h3>{{article.title}}</h3>
+      <p class="card-text">{{article.body[:200]|markdown}}....</p>
+      <a href="{{url_for('main.article',id=article.id)}}" class="btn btn-primary">Read full Course</a>
+    </li>
+    {% endif %}
+  {% endfor %}
+
+</ul>
 
 {% endblock %}

@@ -9,8 +9,6 @@
 
   <ul class="list-group">
 
-
-{%  for quiz in quizzes %}
            <!-- Add icon library -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
@@ -37,16 +35,37 @@
       }
   </style>
 <!-- Use an element to toggle between a like/dislike icon -->
-
-<li class="list-group-item">
-
+<h3>English</h3>
+{% for quiz in quizzes %}
+  {% if quiz.subject == "english" %}
+    <li class="list-group-item">
       <h3>{{quiz.title}}</h3>
       <p class="card-text"></p>
       <a href="{{url_for('main.take_quiz',id=quiz.id)}}" class="btn btn-primary">Take quiz!</a>
- </li>
-
-    {% endfor %}
-  </ul>
-
+    </li>
+  {% endif %}
+{% endfor %}
+<h3>Computer Science</h3>
+{% for quiz in quizzes %}
+  {% if quiz.subject == "computer-science" %}
+    <li class="list-group-item">
+      <h3>{{quiz.title}}</h3>
+      <p class="card-text"></p>
+      <a href="{{url_for('main.take_quiz',id=quiz.id)}}" class="btn btn-primary">Take quiz!</a>
+    </li>
+  {% endif %}
+{% endfor %}
+<h3>Maths</h3>
+{% for quiz in quizzes %}
+  {% if quiz.subject == "maths" %}
+    <li class="list-group-item">
+      <h3>{{quiz.title}}</h3>
+      <p class="card-text"></p>
+      <a href="{{url_for('main.take_quiz',id=quiz.id)}}" class="btn btn-primary">Take quiz!</a>
+    </li>
+  {% endif %}
+{% endfor %}
+  
+</ul>
 
 {% endblock %}
