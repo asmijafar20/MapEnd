@@ -46,6 +46,10 @@
                 {% endif %}                
             </div>
             <div class="form-group">
+              <b>Subject</b>
+              {{ render_field(form.subject) }}
+            </div>
+            <div class="form-group">
                 <!--For form validation-->                
                 {% if form.body.errors %}
                 {{ render_field(form.body, class_="form-control") }}

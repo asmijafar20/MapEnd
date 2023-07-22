@@ -72,7 +72,7 @@ def add_article():
     form = ArticleForm()
     if form.validate_on_submit():
         # using author here (check backref in models.py)
-        article = Article(title=form.title.data,body=form.body.data,author=current_user)
+        article = Article(title=form.title.data,body=form.body.data,author=current_user, subject=form.subject.data)
         db.session.add(article)
         db.session.commit()
         flash('Your article has been created !','success')

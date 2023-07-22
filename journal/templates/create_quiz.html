@@ -92,7 +92,11 @@
     <form action="/create_quiz" method="POST">
         <label for="title">Quiz Title:</label>
         <input type="text" id="title" name="title" required><br><br>
-
+        <select name="subject">
+            <option value="english">English</option>
+            <option value="maths">Maths</option>
+            <option value="computer-science" selected>Computer Science</option>
+        </select>
         <div id="questions">
             <div class="question">
                 <label>Question:</label>

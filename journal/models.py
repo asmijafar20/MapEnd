@@ -33,6 +33,7 @@ class Article(db.Model):
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow())
     body = db.Column(db.Text,nullable=False)
     user_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+    subject = db.Column(db.String(100))
     #Here using lower case User because this refers to the table name
     def __repr__(self):
         return f"Article('{self.title}','{self.date_posted}')"
@@ -43,6 +44,7 @@ class Quiz(db.Model):
     questions = db.relationship('Question', backref='quiz', cascade='all, delete-orphan')
     interviewer_id = db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     date_posted = db.Column(db.DateTime,nullable=False,default=datetime.utcnow())
+    subject = db.Column(db.String(100))
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
