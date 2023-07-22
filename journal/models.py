@@ -1,6 +1,7 @@
 from journal import db,login_manager
 from datetime import datetime
 from flask_login import UserMixin
+from sqlalchemy.dialects import sqlite
 
 '''
 Will be using UserMixin because User model should have functions like is_authenticated,get_id
@@ -20,8 +21,7 @@ class User(db.Model,UserMixin):
     role = db.Column(db.String(100),nullable=False)
     posts = db.relationship('Article',backref='author',lazy=True)
     quizzes = db.relationship('Quiz', backref='interviewer',lazy=True)
-    quiz_taken = db.Column(db.String(255))
-    quizes_taken = db.Column(db.JSON, nullable=False)
+    quizes_taken = db.Column(db.String(200))
 
     def __repr__(self):
         return f"User('{self.username}','{self.email}')"

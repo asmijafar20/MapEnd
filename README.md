@@ -9,4 +9,4 @@
 * Activate env : ```$ workon env``` or ```$ source env/bin/activate```
 * Install dependencies : ```$ pip install -r requirements.txt```
 * Set environment variables : ```$ source env_vars.sh```
-* Run project : ```$ python run.py```
+* Run project : ```$ python app.py```

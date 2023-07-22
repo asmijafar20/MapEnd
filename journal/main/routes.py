@@ -149,11 +149,14 @@ def create_quiz():
     return render_template('create_quiz.html')
 
 # Display all quizzes
-
 @main.route('/quizzes')
 def quizzes():
+    quizes_taken = current_user.quizes_taken
+    quizes_taken_list = convert_string_to_list(quizes_taken)
+    print(quizes_taken_list)
+
     #debug this later
-    quizzes = Quiz.query.order_by(Quiz.date_posted.desc())
+    quizzes = Quiz.query.filter(Quiz.id.not_in(quizes_taken_list)).order_by(Quiz.date_posted.desc())
     total = count(quizzes)
     if total>0:
         return render_template('quizzes.html',quizzes=quizzes)
@@ -207,18 +210,39 @@ def take_quiz(id):
 
         # Update the quizzes_taken for the current user
         quizes_taken_data = current_user.quizes_taken
-        if not quizes_taken_data:
-            quizes_taken_data = []
-        quizes_taken_data.append(quiz.id)
+        quizes_taken_data = add_to_quizes_taken(quiz, quizes_taken_data)
         current_user.quizes_taken = quizes_taken_data
-        print(quizes_taken_data)
         db.session.commit()
-
-
         flash('Quiz submitted successfully!', 'success')
         return redirect(url_for('main.quizzes'))
 
     return render_template('take_quiz.html', quiz=quiz)
+
+def add_to_quizes_taken(quiz, quizes_taken_data):
+    if not quizes_taken_data:
+        quizes_taken_data = ""
+        quizes_taken_data += f"{quiz.id},"
+        current_user.quizes_taken = quizes_taken_data
+    else :
+        quizes_taken_set = convert_string_to_list(quizes_taken_data)
+        if quiz.id not in quizes_taken_set:
+            quizes_taken_data += f"{quiz.id},"
+
+    return quizes_taken_data
+
+def convert_string_to_list(quizes_taken_data):
+    if not quizes_taken_data:
+        return []
+    quizes_taken_set = []
+    number = ""
+    for char in quizes_taken_data:
+        if char != ',':
+            number += char
+            continue
+        else :
+            quizes_taken_set.append(int(number))
+            number = ""
+    return quizes_taken_set
 
 
 @main.route('/admin_dashboard')
