@@ -121,7 +121,7 @@ def create_quiz():
         title = request.form['title']
         questions = request.form.getlist('question')
         options = request.form.getlist('option')
-        subject = request.form.getlist('subject')
+        subject = request.form['subject']
         correct_answers = request.form.getlist('correct_answer')
 
         # Create a new quiz object
