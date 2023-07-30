@@ -7,14 +7,12 @@
   <hr>
   <table class="table table-striped">
     <tr>
-        <th>ID</th>
         <th>Username</th>
         <th>Email</th>
         <th>Score</th>
     </tr>
     {% for student in student_scores %}
     <tr>
-        <td>{{ student.id }}</td>
         <td>{{ student.username }}</td>
         <td>{{ student.email }}</td>
         <td>{{ student.score }}</td>

@@ -14,6 +14,7 @@
       <tr>
           <th>ID</th>
           <th>Title</th>
+          <th>Subject</th>
           <th>Author</th>
           <th>Date</th>
           <th></th>
@@ -23,9 +24,9 @@
        <tr>
         <td>{{loop.index}}</td>
         <td>{{article.title}}</td>
+        <td>{{article.subject}}</td>
         <td>{{article.author.username}}</td>
         <td>{{article.date_posted.strftime('%Y-%m-%d')}}</td>
-        <td><a href="edit_course/{{article.id}}" class="btn btn-default pull-right">Edit</a></td>
         <td>
           <form action="{{url_for('main.delete', id=article.id)}}" method="post">
             <input type="hidden" name="_method" value="DELETE">
@@ -45,6 +46,7 @@
       <tr>
           <th>ID</th>
           <th>Title</th>
+          <th>Subject</th>
           <th>Interviewer</th>
           <th>Date</th>
           <th></th>
@@ -54,6 +56,7 @@
        <tr>
         <td>{{loop.index}}</td>
         <td>{{quiz.title}}</td>
+        <td>{{quiz.subject}}</td>
         <td>{{quiz.interviewer.username}}</td>
         <td>{{quiz.date_posted.strftime('%Y-%m-%d')}}</td>
         <td>
@@ -71,15 +74,15 @@
   <hr>
   <table class="table table-striped">
       <tr>
-          <th>ID</th>
           <th>Email Address</th>
+          <th>Username</th>
           <th>Role</th>
           <th></th>
       </tr>
     {% for user in users %}
        <tr>
-        <td>{{user.id}}</td>
         <td>{{user.email}}</td>
+        <td>{{user.username}}</td>
         <td>{{user.role}}</td>
         <td>
           <form action="{{url_for('main.delete_user', id=user.id)}}" method="post">

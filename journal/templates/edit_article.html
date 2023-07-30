@@ -14,10 +14,10 @@
     }
 
     </style>
-   <h1 style="color: white; font-size: 30px;"><b>Edit Article</b></h1>
+   <h1 style="color: white; font-size: 30px;"><b>Edit Course</b></h1>
   {% from "includes/_formhelpers.html" import render_field %}
   <div class="alert alert-success my-3"  role="alert">
-    Edit your post !!
+    Edit your course !!
 </div>
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
@@ -31,7 +31,7 @@
 <form method="POST" action="">
     {{form.hidden_tag()}}
     <div class="form-group">
-        <h1>Update Blog</h1>
+        <h1>Update Course</h1>
         <div class="form-group">
             {{form.title.label(class="form-control-label")}}
             <!--For form validation-->                

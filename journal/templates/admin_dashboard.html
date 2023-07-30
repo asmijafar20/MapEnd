@@ -7,16 +7,14 @@
   <hr>
   <table class="table table-striped">
       <tr>
-          <th>ID</th>
           <th>Email Address</th>
+          <th>Username</th>
           <th>Role</th>
-          <th></th>
       </tr>
     {% for user in users %}
        <tr>
-        <td>{{loop.index}}</td>
-        <td>{{user.id}}</td>
         <td>{{user.email}}</td>
+        <td>{{user.username}}</td>
         <td>{{user.role}}</td>
         <td>
           <form action="{{url_for('main.delete_user', id=user.id)}}" method="post">

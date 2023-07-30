@@ -23,7 +23,7 @@ def index():
 def about():
     return render_template('about.html')
 
-#Articles
+#courses
 @main.route('/courses')
 def articles():
     #debug this later
@@ -35,7 +35,7 @@ def articles():
         flash('Oops ! No Article found','success')
         return render_template('articles.html')
 
-#Single Article
+#Single course
 @main.route('/articles/<string:id>/')
 def article(id):
     article = Article.query.get_or_404(id)
@@ -65,7 +65,7 @@ def dashboard():
     # #Close Connection
     # cur.close()
 
-# Add Article
+# Add course
 @main.route('/add_course', methods=['GET','POST'])
 @login_required
 def add_article():
@@ -75,12 +75,12 @@ def add_article():
         article = Article(title=form.title.data,body=form.body.data,author=current_user, subject=form.subject.data)
         db.session.add(article)
         db.session.commit()
-        flash('Your article has been created !','success')
+        flash('Your course has been created !','success')
         return redirect(url_for('main.dashboard'))
     return render_template('add_article.html', form = form)
 
 
-# Edit Article
+# Edit course
 @main.route('/edit_course/<string:id>', methods=['GET','POST'])
 @login_required
 def edit_article(id):
@@ -100,7 +100,7 @@ def edit_article(id):
         form.body.data = article.body
     return render_template('edit_article.html',form=form)
 
-# Delete Article
+# Delete course
 @main.route("/article/<int:id>/delete",methods=['POST'])
 @login_required
 def delete(id):
@@ -109,7 +109,7 @@ def delete(id):
         abort(403)
     db.session.delete(article)
     db.session.commit()
-    flash("Your article has been deleted",'success')
+    flash("Your course has been deleted",'success')
     return redirect(url_for('main.dashboard'))
 
 # Create Quiz

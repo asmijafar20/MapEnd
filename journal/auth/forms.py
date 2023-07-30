@@ -8,7 +8,7 @@ from wtforms import SelectField
 class RegistrationForm(FlaskForm):
     username = StringField('Username',validators=[DataRequired(),Length(min=2,max=20)])
     email = StringField('Email',validators=[DataRequired(),Email()])
-    role = SelectField('Role', choices=[('interviewer', 'Interviewer'), ('user', 'User'), ('cs expert', 'CS Expert')])
+    role = SelectField('Role', choices=[('interviewer', 'Interviewer'), ('user', 'User'), ('cs expert', 'Expert')])
     password = PasswordField('Password',validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',validators=[DataRequired(),EqualTo('password')])
     submit = SubmitField('Sign Up')

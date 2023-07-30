@@ -12,6 +12,7 @@
       <tr>
           <th>ID</th>
           <th>Title</th>
+          <th>Subject</th>
           <th>Interviewer</th>
           <th>Date</th>
           <th></th>
@@ -21,6 +22,7 @@
        <tr>
         <td>{{loop.index}}</td>
         <td>{{quiz.title}}</td>
+        <td>{{quiz.subject}}</td>
         <td>{{quiz.interviewer.username}}</td>
         <td>{{quiz.date_posted.strftime('%Y-%m-%d')}}</td>
         <td>
