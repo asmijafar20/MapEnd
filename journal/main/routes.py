@@ -61,13 +61,25 @@ def generate_report():
     quizes_userCount = db.session.query(quiz_users.c.title, func.count(quiz_users.c.student_id), func.avg(quiz_users.c.score).label("average_score")).group_by(quiz_users.c.id).all()
     percentage_per_quiz = [(title, count / number_of_users * 100,  count, average_score) for title, count, average_score in quizes_userCount]
     print(number_of_users)
+    userslist = db.session.query(User.username, User.role).all()
+    courseslist = db.session.query(Article.title, Article.subject, User.username).join(User, Article.user_id == User.id)
     output = io.StringIO("")
     writer = csv.writer(output)
     writer.writerow(['Number of users', 'Number of courses', 'Number of quizes'])
     writer.writerow([number_of_users, number_of_courses, number_of_quizes])
+    writer.writerow([""])
+    writer.writerow(['Course title', 'Subject', 'Author'])
+    for row in courseslist:
+            writer.writerow(row)
+    writer.writerow([""])
     writer.writerow(['Quiz title', 'Percentage of users taking the quiz', 'Number of users taking the quiz', 'Average score'])
     for row in percentage_per_quiz:
         writer.writerow(row)
+    writer.writerow([""])
+    writer.writerow(['User Name', 'Role'])
+    for row in userslist:
+        writer.writerow(row)
+    
 
     data = output.getvalue()
     response = make_response(data)
@@ -93,12 +105,6 @@ def dashboard():
         return render_template('dashboard.html',articles=articles)
     else:
         return render_template('articles.html')
-    # else:
-    #     msg = 'No Articles Found'
-    #     return render_template('dashboard.html', msg = msg)
-   
-    # #Close Connection
-    # cur.close()
 
 # Add course
 @main.route('/add_course', methods=['GET','POST'])
@@ -220,12 +226,6 @@ def quiz_dashboard():
     quizzes = Quiz.query.filter_by(interviewer_id=current_user.id).order_by(Quiz.date_posted.desc())
     
     return render_template('quiz_dashboard.html',quizzes=quizzes)
-    # else:
-    #     msg = 'No Articles Found'
-    #     return render_template('dashboard.html', msg = msg)
-   
-    # #Close Connection
-    # cur.close()
 
 @main.route('/quizzes/<int:id>', methods=['GET', 'POST'])
 def take_quiz(id):
