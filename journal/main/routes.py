@@ -1,10 +1,13 @@
-from flask import Blueprint, flash
+from flask import Blueprint, flash, send_file, make_response, stream_with_context
+from werkzeug.wsgi import FileWrapper
 from journal.models import User,Article,Quiz,Question,Option,Response
 from journal.main.forms import ArticleForm
 from flask import render_template, flash,redirect,url_for, request,abort
 from flask_login import current_user,login_required
 from journal import db
-import json
+from sqlalchemy import func
+import csv
+import io
 
 main = Blueprint('main',__name__)
 
@@ -40,6 +43,38 @@ def articles():
 def article(id):
     article = Article.query.get_or_404(id)
     return render_template('article.html', article = article)
+
+# Report
+@main.route('/report')
+def report():
+    return render_template('report.html')
+
+# generate CSV and export
+@main.route('/generate_report')
+def generate_report():
+    # number of users, courses and quizes
+    number_of_users = User.query.count()
+    number_of_courses = Article.query.count()
+    number_of_quizes = Quiz.query.count()
+    # number % of users taking each quiz
+    quiz_users = db.session.query(Quiz.title, Quiz.id, Response.student_id, Response.score).join(Response, Quiz.id == Response.quiz_id).distinct().subquery()
+    quizes_userCount = db.session.query(quiz_users.c.title, func.count(quiz_users.c.student_id), func.avg(quiz_users.c.score).label("average_score")).group_by(quiz_users.c.id).all()
+    percentage_per_quiz = [(title, count / number_of_users * 100,  count, average_score) for title, count, average_score in quizes_userCount]
+    print(number_of_users)
+    output = io.StringIO("")
+    writer = csv.writer(output)
+    writer.writerow(['Number of users', 'Number of courses', 'Number of quizes'])
+    writer.writerow([number_of_users, number_of_courses, number_of_quizes])
+    writer.writerow(['Quiz title', 'Percentage of users taking the quiz', 'Number of users taking the quiz', 'Average score'])
+    for row in percentage_per_quiz:
+        writer.writerow(row)
+
+    data = output.getvalue()
+    response = make_response(data)
+    response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
+    response.mimetype = 'text/csv'
+
+    return response
 
 # Dashboard
 @main.route('/dashboard')
