@@ -86,7 +86,7 @@ def generate_report():
     response.mimetype = 'text/csv'
 
     # return response
-    return render_template('view_report.html', users=userslist, quizes = percentage_per_quiz, courses = courseslist)
+    return render_template('view_report.html', users=userslist, quizes = percentage_per_quiz, courses = courseslist, number_of_users=number_of_users, number_of_courses=number_of_courses,  number_of_quizes= number_of_quizes)
 
 # Dashboard
 @main.route('/dashboard')
