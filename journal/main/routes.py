@@ -70,7 +70,7 @@ def generate_report():
     writer.writerow([""])
     writer.writerow(['Course title', 'Subject', 'Author'])
     for row in courseslist:
-            writer.writerow(row)
+        writer.writerow(row)
     writer.writerow([""])
     writer.writerow(['Quiz title', 'Percentage of users taking the quiz', 'Number of users taking the quiz', 'Average score'])
     for row in percentage_per_quiz:
@@ -79,14 +79,14 @@ def generate_report():
     writer.writerow(['User Name', 'Role'])
     for row in userslist:
         writer.writerow(row)
-    
 
     data = output.getvalue()
     response = make_response(data)
     response.headers['Content-Disposition'] = 'attachment; filename=report.csv'
     response.mimetype = 'text/csv'
 
-    return response
+    # return response
+    return render_template('view_report.html', users=userslist, quizes = percentage_per_quiz, courses = courseslist)
 
 # Dashboard
 @main.route('/dashboard')
