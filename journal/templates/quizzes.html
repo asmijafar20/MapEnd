@@ -37,7 +37,7 @@
 <!-- Use an element to toggle between a like/dislike icon -->
 <h3>English</h3>
 {% for quiz in quizzes %}
-  {% if quiz.subject == "english" %}
+  {% if quiz.subject == "english" and quiz.enabled %}
     <li class="list-group-item">
       <h3>{{quiz.title}}</h3>
       <p class="card-text"></p>
@@ -47,7 +47,7 @@
 {% endfor %}
 <h3>Computer Science</h3>
 {% for quiz in quizzes %}
-  {% if quiz.subject == "computer-science" %}
+  {% if quiz.subject == "computer-science" and quiz.enabled %}
     <li class="list-group-item">
       <h3>{{quiz.title}}</h3>
       <p class="card-text"></p>
@@ -57,7 +57,7 @@
 {% endfor %}
 <h3>Maths</h3>
 {% for quiz in quizzes %}
-  {% if quiz.subject == "maths" %}
+  {% if quiz.subject == "maths" and quiz.enabled %}
     <li class="list-group-item">
       <h3>{{quiz.title}}</h3>
       <p class="card-text"></p>

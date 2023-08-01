@@ -141,6 +141,31 @@ def edit_article(id):
         form.body.data = article.body
     return render_template('edit_article.html',form=form)
 
+# toggle course
+@main.route('/toggle_course_enabled/<int:id>', methods=['POST'])
+def toggle_course_enabled(id):
+    article = Article.query.get_or_404(id)
+    if article.enabled:
+        article.enabled = False
+    else:
+        article.enabled = True
+        
+    db.session.commit()
+    return redirect(url_for('main.dashboard'))
+
+# toggle quiz
+@main.route('/toggle_quiz_enabled/<int:id>', methods=['POST'])
+def toggle_quiz_enabled(id):
+    quiz = Quiz.query.get_or_404(id)
+    if quiz.enabled:
+        quiz.enabled = False
+    else:
+        quiz.enabled = True
+        
+    db.session.commit()
+    return redirect(url_for('main.dashboard'))
+
+
 # Delete course
 @main.route("/article/<int:id>/delete",methods=['POST'])
 @login_required

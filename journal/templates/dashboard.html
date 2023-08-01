@@ -33,6 +33,15 @@
             <input type="submit" value="Delete" class="btn btn-danger">
           </form>
         </td>
+        <td>
+          <form action="{{url_for('main.toggle_course_enabled', id=article.id)}}" method="post">
+            {% if article.enabled %}
+            <input type="submit" value="Disable" class="btn btn-primary">
+            {% else %}
+            <input type="submit" value="Enable" class="btn btn-secondary">
+            {% endif %}
+          </form>
+        </td>
       </tr>
     {% endfor%}
   </table>
@@ -63,6 +72,15 @@
           <form action="{{url_for('main.delete_quiz', id=quiz.id)}}" method="post">
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" value="Delete" class="btn btn-danger">
+          </form>
+        </td>
+        <td>
+          <form action="{{url_for('main.toggle_quiz_enabled', id=quiz.id)}}" method="post">
+            {% if quiz.enabled %}
+            <input type="submit" value="Disable" class="btn btn-primary">
+            {% else %}
+            <input type="submit" value="Enable" class="btn btn-secondary">
+            {% endif %}
           </form>
         </td>
       </tr>

@@ -34,7 +34,7 @@
 
   <h3>English</h3>
   {% for article in articles %}
-    {% if article.subject == "english" %}
+    {% if article.subject == "english" and article.enabled %}
     <li class="list-group-item">
 
       <h3>{{article.title}}</h3>
@@ -46,7 +46,7 @@
 
   <h3>Computer Science</h3>
   {% for article in articles %}
-    {% if article.subject == "computer-science" %}
+    {% if article.subject == "computer-science" and article.enabled %}
     <li class="list-group-item">
       <h3>{{article.title}}</h3>
       <p class="card-text">{{article.body[:200]|markdown}}....</p>
@@ -57,7 +57,7 @@
 
   <h3>Maths</h3>
   {% for article in articles %}
-    {% if article.subject == "maths" %}
+    {% if article.subject == "maths" and article.enabled %}
     <li class="list-group-item">
       <h3>{{article.title}}</h3>
       <p class="card-text">{{article.body[:200]|markdown}}....</p>
